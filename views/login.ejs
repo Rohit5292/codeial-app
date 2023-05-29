@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Form</title>
+  <link rel="stylesheet" type="text/css" href="login.css">
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <div> <% if (flash.error &&flash.error.length>0) { %>
+      <div style="background-color: aqua; color: red; font: bold;" class="error-message">
+        <%= flash.error %>
+      </div>
+    <% } %></div>
+    <form action="create-session" method="post">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <input type="submit" value="Login">
+    </form>
+  </div>
+</body>
+</html>
