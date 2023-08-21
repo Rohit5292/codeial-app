@@ -1,52 +1,45 @@
 const express = require('express');
 const passport = require('passport');
 const {
-  test,
+  profile,
   login,
   signUp,
   createUser,
   createSession,
-  home,
-  profile,
   changePassword,
   updatePassword,
   destroySession,
   renderResetPassword
 } = require('../controller/userController');
 const authenticate = require('../config/passport');
-const route = express.Router();
 
-// Initialize Passport
-route.use(passport.initialize());
+const router = express.Router();
 
-// Define routes
-route.get('/', home);
-route.get('/profile', authenticate.checkAuthentication, profile);
-route.get('/login', login);
-route.get('/signup', signUp);
-route.post('/create', createUser);
-route.post(
+// Define routes with the /user/ prefix
+router.get('/profile', profile);
+router.get('/login', login);
+router.get('/signup', signUp);
+router.post('/create', createUser);
+router.post(
   '/create-session',
-  passport.authenticate('local', { failureRedirect: '/login' }),
+  passport.authenticate('local', { failureRedirect: '/user/login' }),
   createSession
 );
-route.get('/change-password', changePassword);
-route.post(
+router.get('/change-password', changePassword);
+router.post(
   '/update-password',
   passport.authenticate('local', { failureRedirect: 'back' }),
   updatePassword
 );
-route.get('/reset-password', renderResetPassword);
-route.get('/destroy-session', destroySession);
+router.get('/reset-password', renderResetPassword);
+router.get('/destroy-session', destroySession);
 
 // Define routes for Google authentication
-route.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-// Callback from Google
-route.get(
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+  passport.authenticate('google', { failureRedirect: '/user/' }),
   createSession
 );
 
-module.exports = route;
+module.exports = router;

@@ -2,9 +2,7 @@ const User = require("../models/user");
 const passport = require('../config/passport');
 const bcrypt = require("bcrypt");
 
-module.exports.home = (req, res, next) => {
-  res.render('home');
-};
+
 
 module.exports.profile = (req, res, next) => {
   res.render('profile');
@@ -21,7 +19,7 @@ module.exports.signUp = (req, res, next) => {
     return res.redirect('/profile');
   }
   console.log(req.flash().error)
- return  res.render('signup'); // Pass the flash message to the view
+ return  res.render('signup'); 
 };
 
 

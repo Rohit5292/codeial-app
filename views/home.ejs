@@ -7,11 +7,30 @@
     <title>Document</title>
 </head>
 <body>
-    <h1 style="justify-content: center;display: flex;">this is home page</h1>
-    <p style="font-size: large; justify-content: center; display: flex;">to view profile page you need to login ir signUp bro......</p>
-<div style="display: flex; background-color: bisque;">
-    <a style="margin-left: 360px;font-size: xx-large;" href="/signup">sign up</a>
-    <a style="margin-left: auto; font-size: xx-large;" href="/login">login</a>
-</div>
+    <h1>this is home page</h1>
+    <p>to view profile page you need to login or sign up bro......</p>
+    <div> <% if (flash.error &&flash.error.length>0) { %>
+        <div style="background-color: aqua; color: red; font: bold;" class="error-message">
+          <%= flash.error %>
+        </div>
+      <% } %></div>
+    <div>
+        <a href="/signup">sign up</a>
+        <a href="/login">login</a>
+        <form action="post/create-post" method="post">
+            <label for="title">Title</label>
+            <input name="title" placeholder="title" type="text">
+            <label for="content">content</label>
+            <textarea name="content" cols="20" rows="10" placeholder="type your content here...."></textarea>
+       <input type="submit" value="submit">
+        </form>
+        <h3>Recent Post</h3>
+        <% posts.forEach(post => { %>
+            <div class="post">
+              <h2><%= post.title %></h2>
+              <p><%= post.content %></p>
+            </div>
+          <% }); %>
+    </div>
 </body>
 </html>

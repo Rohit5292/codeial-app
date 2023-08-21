@@ -1,6 +1,8 @@
 const express = require('express');
-const route = require('./routes/route');
+const userRoute = require('./routes/route');
+const homeRoute= require('./routes/homeRoute');
 const cookieParser = require('cookie-parser');
+const postRoute = require('./routes/postRoute')
 require('./config/mongoose');
 const session = require('express-session');
 const app = express();
@@ -12,7 +14,7 @@ const flash = require('connect-flash');
 const message = require('./config/middleware')
 
 
-const port = 8000;
+const port = 5000;
 app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded form data
 app.use(express.json()); // Middleware to parse JSON data
 
@@ -40,7 +42,10 @@ app.use(
   app.use(passportLocal.saveAuthenticatedUser); // Fixed the function name here
   app.use(flash());
   app.use(message.messages);
-app.use(route);
+  app.use(homeRoute)
+  app.use('/', userRoute);
+  app.use('/post', postRoute);
+
 
 app.listen(port, (err) => {
   if (err) {
